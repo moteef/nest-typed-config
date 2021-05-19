@@ -1,0 +1,583 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>nest-typed-config</title>
+	<meta name="description" content="Documentation for nest-typed-config">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">nest-typed-config</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>nest-typed-config</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 align="center">Nest-Typed-Config</h1>
+				<h3 align="center">Never write strings to read config again.</h3>
+				<p align="center">
+					<a href="https://www.npmjs.com/package/nest-typed-config"><img src="https://img.shields.io/npm/v/nest-typed-config.svg" alt="NPM Version" /></a>
+					<a href="https://www.npmjs.com/package/nest-typed-config"><img src="https://img.shields.io/npm/l/nest-typed-config.svg" alt="Package License" /></a>
+					<a href="https://www.npmjs.com/package/nest-typed-config"><img src="https://img.shields.io/npm/dm/nest-typed-config.svg" alt="NPM Downloads" /></a>
+					<a href="https://github.com/Nikaple/nest-typed-config/actions/workflows/build.yml"><img src="https://github.com/Nikaple/nest-typed-config/workflows/build/badge.svg" alt="build" /></a>
+					<a href="https://coveralls.io/github/Nikaple/nest-typed-config?branch=main"><img src="https://coveralls.io/repos/github/Nikaple/nest-typed-config/badge.svg?branch=main" alt="Coverage" /></a>
+				</p>
+				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+					<h2>Features</h2>
+				</a>
+				<ul>
+					<li>Provide a type-safe and intuitive way to config your <a href="https://github.com/nestjs/nest">Nest</a> projects, just as smooth as request DTO.</li>
+					<li>Load your configuration with environment variables, json/yaml/toml configuration files or remote endpoints.</li>
+					<li>Validate your configuration with <a href="https://github.com/typestack/class-validator">class-validator</a> and <a href="https://github.com/typestack/class-transformer">class-transformer</a>.</li>
+					<li>Provide easy to use options by default, meanwhile everything is customizable.</li>
+				</ul>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<pre><code class="language-bash"><span style="color: #008000"># For Yarn</span>
+<span style="color: #000000">$ yarn add nest-typed-config</span>
+
+<span style="color: #008000"># For NPM</span>
+<span style="color: #000000">$ npm i --save nest-typed-config</span>
+</code></pre>
+				<a href="#inspiration" id="inspiration" style="color: inherit; text-decoration: none;">
+					<h2>Inspiration</h2>
+				</a>
+				<p>There are various popular configuration modules for <a href="https://github.com/nestjs/nest">Nest framework</a>, such as the <a href="https://github.com/nestjs/config">official configuration module</a>, <a href="https://github.com/nestjsx/nestjs-config">nestjs-config</a> and <a href="https://github.com/rubiin/nestjs-easyconfig">nestjs-easyconfig</a>. These modules can help to manage configurations, validate them, and load them through the <code>ConfigService</code>. But that&#39;s when type-safety is gone. For example:</p>
+				<pre><code class="language-ts"><span style="color: #008000">// @nestjs/config, with type-casting</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">dbUser</span><span style="color: #000000"> = </span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">configService</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">&lt;</span><span style="color: #267F99">string</span><span style="color: #000000">&gt;(</span><span style="color: #A31515">&#039;DATABASE_USER&#039;</span><span style="color: #000000">);</span>
+<span style="color: #008000">// nestjs-config, returns `any` type</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">env</span><span style="color: #000000"> = </span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">config</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;app.environment&#039;</span><span style="color: #000000">);</span>
+<span style="color: #008000">// nestjs-easyconfig, only string is supported</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value</span><span style="color: #000000"> = </span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">config</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;key&#039;</span><span style="color: #000000">);</span>
+</code></pre>
+				<p>Writing type casting is a pain and hard to maintain, and it&#39;s common to use non-string configurations in real-world projects. This module aims to provide an intuitive and type-safe way to load, validate and use configurations. Just import any config model, and inject it with full TypeScript support. In a nutshell:</p>
+				<pre><code class="language-ts"><span style="color: #008000">// config.ts</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">Config</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    @</span><span style="color: #795E26">IsString</span><span style="color: #000000">()</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">host</span><span style="color: #000000">!: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">    @</span><span style="color: #795E26">IsNumber</span><span style="color: #000000">()</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">port</span><span style="color: #000000">!: </span><span style="color: #267F99">number</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #008000">// app.service.ts</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Config</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./config&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">@</span><span style="color: #795E26">Injectable</span><span style="color: #000000">()</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">AppService</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">constructor</span><span style="color: #000000">(</span><span style="color: #0000FF">private</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">config</span><span style="color: #000000">: </span><span style="color: #267F99">Config</span><span style="color: #000000">) {}</span>
+
+<span style="color: #000000">    </span><span style="color: #795E26">show</span><span style="color: #000000">() {</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`http://</span><span style="color: #0000FF">${</span><span style="color: #0000FF">this</span><span style="color: #000000FF">.</span><span style="color: #001080">config</span><span style="color: #000000FF">.</span><span style="color: #001080">host</span><span style="color: #0000FF">}</span><span style="color: #A31515">:</span><span style="color: #0000FF">${</span><span style="color: #0000FF">this</span><span style="color: #000000FF">.</span><span style="color: #001080">config</span><span style="color: #000000FF">.</span><span style="color: #001080">port</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">)</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#quick-start" id="quick-start" style="color: inherit; text-decoration: none;">
+					<h2>Quick Start</h2>
+				</a>
+				<p>Let&#39;s define the configuration model first. It can be nested at arbitrary depth.</p>
+				<pre><code class="language-ts"><span style="color: #008000">// config.ts</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Allow</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;class-validator&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #008000">// validator is omitted for simplicity</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">TableConfig</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    @</span><span style="color: #795E26">Allow</span><span style="color: #000000">()</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">name</span><span style="color: #000000">!: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">DatabaseConfig</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    @</span><span style="color: #795E26">Type</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">TableConfig</span><span style="color: #000000">)</span>
+<span style="color: #000000">    @</span><span style="color: #795E26">Allow</span><span style="color: #000000">()</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">table</span><span style="color: #000000">!: </span><span style="color: #267F99">TableConfig</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">RootConfig</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    @</span><span style="color: #795E26">Type</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">DatabaseConfig</span><span style="color: #000000">)</span>
+<span style="color: #000000">    @</span><span style="color: #795E26">Allow</span><span style="color: #000000">()</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">database</span><span style="color: #000000">!: </span><span style="color: #267F99">DatabaseConfig</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>Then, add a configuration file such as <code>.env.yaml</code> under project root directory:</p>
+				<pre><code class="language-yaml"><span style="color: #800000">database</span><span style="color: #000000">:</span>
+<span style="color: #000000">    </span><span style="color: #800000">table</span><span style="color: #000000">:</span>
+<span style="color: #000000">        </span><span style="color: #800000">name</span><span style="color: #000000">: </span><span style="color: #0000FF">example</span>
+</code></pre>
+				<p>After creating the configuration file, import <code>TypedConfigModule</code> and <code>fileLoader</code> to load configuration from file system.</p>
+				<pre><code class="language-ts"><span style="color: #008000">// app.module.ts</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Module</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@nestjs/common&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">TypedConfigModule</span><span style="color: #000000">, </span><span style="color: #001080">fileLoader</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;nest-typed-config&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">AppController</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./app.controller&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">AppService</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./app.service&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">RootConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./config&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #008000">// Register TypedConfigModule</span>
+<span style="color: #000000">@</span><span style="color: #795E26">Module</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">imports:</span><span style="color: #000000"> [</span>
+<span style="color: #000000">        </span><span style="color: #001080">TypedConfigModule</span><span style="color: #000000">.</span><span style="color: #795E26">forRoot</span><span style="color: #000000">({</span>
+<span style="color: #000000">            </span><span style="color: #001080">schema:</span><span style="color: #000000"> </span><span style="color: #001080">RootConfig</span><span style="color: #000000">,</span>
+<span style="color: #000000">            </span><span style="color: #001080">load:</span><span style="color: #000000"> </span><span style="color: #795E26">fileLoader</span><span style="color: #000000">(),</span>
+<span style="color: #000000">        }),</span>
+<span style="color: #000000">    ],</span>
+<span style="color: #000000">    </span><span style="color: #001080">providers:</span><span style="color: #000000"> [</span><span style="color: #001080">AppService</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">controllers:</span><span style="color: #000000"> [</span><span style="color: #001080">AppController</span><span style="color: #000000">],</span>
+<span style="color: #000000">})</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">AppModule</span><span style="color: #000000"> {}</span>
+</code></pre>
+				<p>That&#39;s it! You can use any config or sub-config you defined as injectable services now!</p>
+				<pre><code class="language-ts"><span style="color: #008000">// app.service.ts</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Injectable</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@nestjs/common&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">RootConfig</span><span style="color: #000000">, </span><span style="color: #001080">DatabaseConfig</span><span style="color: #000000">, </span><span style="color: #001080">TableConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./config&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">@</span><span style="color: #795E26">Injectable</span><span style="color: #000000">()</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">AppService</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// inject any config or sub-config you like</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">constructor</span><span style="color: #000000">(</span>
+<span style="color: #000000">        </span><span style="color: #0000FF">private</span><span style="color: #000000"> </span><span style="color: #001080">config</span><span style="color: #000000">: </span><span style="color: #267F99">RootConfig</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #0000FF">private</span><span style="color: #000000"> </span><span style="color: #001080">databaseConfig</span><span style="color: #000000">: </span><span style="color: #267F99">DatabaseConfig</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #0000FF">private</span><span style="color: #000000"> </span><span style="color: #001080">tableConfig</span><span style="color: #000000">: </span><span style="color: #267F99">TableConfig</span><span style="color: #000000">,</span>
+<span style="color: #000000">    ) {}</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// enjoy type safety!</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #795E26">show</span><span style="color: #000000">(): </span><span style="color: #267F99">any</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">out</span><span style="color: #000000"> = [</span>
+<span style="color: #000000">            </span><span style="color: #A31515">`root.name: </span><span style="color: #0000FF">${</span><span style="color: #0000FF">this</span><span style="color: #000000FF">.</span><span style="color: #001080">config</span><span style="color: #000000FF">.</span><span style="color: #001080">name</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">,</span>
+<span style="color: #000000">            </span><span style="color: #A31515">`root.database.name: </span><span style="color: #0000FF">${</span><span style="color: #0000FF">this</span><span style="color: #000000FF">.</span><span style="color: #001080">databaseConfig</span><span style="color: #000000FF">.</span><span style="color: #001080">name</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">,</span>
+<span style="color: #000000">            </span><span style="color: #A31515">`root.database.table.name: </span><span style="color: #0000FF">${</span><span style="color: #0000FF">this</span><span style="color: #000000FF">.</span><span style="color: #001080">tableConfig</span><span style="color: #000000FF">.</span><span style="color: #001080">name</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">,</span>
+<span style="color: #000000">        ].</span><span style="color: #795E26">join</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;</span><span style="color: #EE0000">\n</span><span style="color: #A31515">&#039;</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">out</span><span style="color: #0000FF">}</span><span style="color: #EE0000">\n</span><span style="color: #A31515">`</span><span style="color: #000000">;</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>For a full example, please visit <a href="https://codesandbox.io/s/affectionate-tdd-1juv6?file=/src/config.ts">CodeSandbox</a>, or our <a href="https://github.com/Nikaple/nest-typed-config/blob/main/examples/basic/src/app.module.ts">examples</a> folder.</p>
+				<a href="#using-loaders" id="using-loaders" style="color: inherit; text-decoration: none;">
+					<h2>Using loaders</h2>
+				</a>
+				<a href="#using-dotenv-loader" id="using-dotenv-loader" style="color: inherit; text-decoration: none;">
+					<h3>Using dotenv loader</h3>
+				</a>
+				<p>The <code>dotenvLoader</code> function allows you to load configuration with <a href="https://github.com/motdotla/dotenv">dotenv</a>, which is similar to the <a href="https://github.com/nestjs/config">official configuration module</a>. You can use this loader to load configuration from <code>.env</code> files or environment variables.</p>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h4>Example</h4>
+				</a>
+				<pre><code class="language-ts"><span style="color: #001080">TypedConfigModule</span><span style="color: #000000">.</span><span style="color: #795E26">forRoot</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">schema:</span><span style="color: #000000"> </span><span style="color: #001080">RootConfig</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">load:</span><span style="color: #000000"> </span><span style="color: #795E26">dotenvLoader</span><span style="color: #000000">({ </span><span style="color: #008000">/* options */</span><span style="color: #000000"> }),</span>
+<span style="color: #000000">})</span>
+</code></pre>
+				<a href="#passing-options" id="passing-options" style="color: inherit; text-decoration: none;">
+					<h4>Passing options</h4>
+				</a>
+				<p>The <code>dotenvLoader</code> function optionally expects a <code>DotenvLoaderOptions</code> object as a first parameter:</p>
+				<pre><code class="language-ts"><span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">DotenvLoaderOptions</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">/**</span>
+<span style="color: #008000">     * If set, use the separator to parse environment variables to objects.</span>
+<span style="color: #008000">     *</span>
+<span style="color: #008000">     * </span><span style="color: #0000FF">@example</span>
+<span style="color: #008000">     *</span>
+<span style="color: #008000">     * ```bash</span>
+<span style="color: #008000">     * app__port=8080</span>
+<span style="color: #008000">     * db__host=127.0.0.1</span>
+<span style="color: #008000">     * db__port=3000</span>
+<span style="color: #008000">     * ```</span>
+<span style="color: #008000">     *</span>
+<span style="color: #008000">     * if `separator` is set to `__`, environment variables above will be parsed as:</span>
+<span style="color: #008000">     *</span>
+<span style="color: #008000">     * ```json</span>
+<span style="color: #008000">     * {</span>
+<span style="color: #008000">     *     &quot;app&quot;: {</span>
+<span style="color: #008000">     *         &quot;port&quot;: 8080</span>
+<span style="color: #008000">     *     },</span>
+<span style="color: #008000">     *     &quot;db&quot;: {</span>
+<span style="color: #008000">     *         &quot;host&quot;: &quot;127.0.0.1&quot;,</span>
+<span style="color: #008000">     *         &quot;port&quot;: 3000</span>
+<span style="color: #008000">     *     }</span>
+<span style="color: #008000">     * }</span>
+<span style="color: #008000">     * ```</span>
+<span style="color: #008000">     */</span>
+<span style="color: #000000">    </span><span style="color: #001080">separator</span><span style="color: #000000">?: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">/**</span>
+<span style="color: #008000">     * If &quot;true&quot;, environment files (`.env`) will be ignored.</span>
+<span style="color: #008000">     */</span>
+<span style="color: #000000">    </span><span style="color: #001080">ignoreEnvFile</span><span style="color: #000000">?: </span><span style="color: #267F99">boolean</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">/**</span>
+<span style="color: #008000">     * If &quot;true&quot;, predefined environment variables will not be validated.</span>
+<span style="color: #008000">     */</span>
+<span style="color: #000000">    </span><span style="color: #001080">ignoreEnvVars</span><span style="color: #000000">?: </span><span style="color: #267F99">boolean</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">/**</span>
+<span style="color: #008000">     * Path to the environment file(s) to be loaded.</span>
+<span style="color: #008000">     */</span>
+<span style="color: #000000">    </span><span style="color: #001080">envFilePath</span><span style="color: #000000">?: </span><span style="color: #267F99">string</span><span style="color: #000000"> | </span><span style="color: #267F99">string</span><span style="color: #000000">[];</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">/**</span>
+<span style="color: #008000">     * A boolean value indicating the use of expanded variables.</span>
+<span style="color: #008000">     * If .env contains expanded variables, they&#039;ll only be parsed if</span>
+<span style="color: #008000">     * this property is set to true.</span>
+<span style="color: #008000">     * </span>
+<span style="color: #008000">     * Internally, dotenv-expand is used to expand variables.</span>
+<span style="color: #008000">     */</span>
+<span style="color: #000000">    </span><span style="color: #001080">expandVariables</span><span style="color: #000000">?: </span><span style="color: #267F99">boolean</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#using-file-loader" id="using-file-loader" style="color: inherit; text-decoration: none;">
+					<h3>Using file loader</h3>
+				</a>
+				<p>The <code>fileLoader</code> function allows you to load configuration with <a href="https://github.com/davidtheclark/cosmiconfig">cosmiconfig</a>. You can use this loader to load configuration from files with various extensions, such as <code>.json</code>, <code>.yaml</code>, <code>.toml</code> or <code>.js</code>.</p>
+				<p>By default, <code>fileLoader</code> searches for <code>.env.{ext}</code> (ext = json, yaml, toml, js) configuration file starting at <code>process.cwd()</code>, and continues to search up the directory tree until it finds some acceptable configuration (or hits the home directory). Moreover, configuration of current environment takes precedence over general configuration (<code>.env.development.toml</code> is loaded instead of <code>.env.toml</code> when <code>NODE_ENV=development</code>)</p>
+				<a href="#example-1" id="example-1" style="color: inherit; text-decoration: none;">
+					<h4>Example</h4>
+				</a>
+				<pre><code class="language-ts"><span style="color: #001080">TypedConfigModule</span><span style="color: #000000">.</span><span style="color: #795E26">forRoot</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">schema:</span><span style="color: #000000"> </span><span style="color: #001080">RootConfig</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">load:</span><span style="color: #000000"> </span><span style="color: #795E26">fileLoader</span><span style="color: #000000">({ </span><span style="color: #008000">/* options */</span><span style="color: #000000"> }),</span>
+<span style="color: #000000">})</span>
+</code></pre>
+				<a href="#passing-options-1" id="passing-options-1" style="color: inherit; text-decoration: none;">
+					<h4>Passing options</h4>
+				</a>
+				<p>The <code>fileLoader</code> function optionally expects a <code>FileLoaderOptions</code> object as a first parameter:</p>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Options</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;cosmiconfig&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">FileLoaderOptions</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">Partial</span><span style="color: #000000">&lt;</span><span style="color: #267F99">Options</span><span style="color: #000000">&gt; {</span>
+<span style="color: #000000">  </span><span style="color: #008000">/**</span>
+<span style="color: #008000">   * basename of config file, defaults to `.env`.</span>
+<span style="color: #008000">   *</span>
+<span style="color: #008000">   * In other words, `.env.yaml`, `.env.yml`, `.env.json`, `.env.toml`, `.env.js`</span>
+<span style="color: #008000">   * will be searched by default.</span>
+<span style="color: #008000">   */</span>
+<span style="color: #000000">  </span><span style="color: #001080">basename</span><span style="color: #000000">?: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #008000">/**</span>
+<span style="color: #008000">   * Use given file directly, instead of recursively searching in directory tree.</span>
+<span style="color: #008000">   */</span>
+<span style="color: #000000">  </span><span style="color: #001080">absolutePath</span><span style="color: #000000">?: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">  </span><span style="color: #008000">/**</span>
+<span style="color: #008000">   * The directory to search from, defaults to `process.cwd()`. See: https://github.com/davidtheclark/cosmiconfig#explorersearch</span>
+<span style="color: #008000">   */</span>
+<span style="color: #000000">  </span><span style="color: #001080">searchFrom</span><span style="color: #000000">?: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>If you want to add support for other extensions, you can use <a href="https://github.com/davidtheclark/cosmiconfig#loaders"><code>loaders</code></a> property provided by <code>cosmiconfig</code>:</p>
+				<pre><code class="language-ts"><span style="color: #001080">TypedConfigModule</span><span style="color: #000000">.</span><span style="color: #795E26">forRoot</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">schema:</span><span style="color: #000000"> </span><span style="color: #001080">RootConfig</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">load:</span><span style="color: #000000"> </span><span style="color: #795E26">fileLoader</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #008000">// .env.ini has the highest priority now</span>
+<span style="color: #000000">        </span><span style="color: #001080">loaders:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">          </span><span style="color: #A31515">&#039;.ini&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #001080">iniLoader</span>
+<span style="color: #000000">        }</span>
+<span style="color: #000000">    }),</span>
+<span style="color: #000000">})</span>
+</code></pre>
+				<a href="#using-remote-loader" id="using-remote-loader" style="color: inherit; text-decoration: none;">
+					<h3>Using remote loader</h3>
+				</a>
+				<p>The <code>remoteLoader</code> function allows you to load configuration from a remote endpoint, such as configuration center. Internally <a href="https://github.com/axios/axios">axios</a> is used to perform http requests.</p>
+				<a href="#example-2" id="example-2" style="color: inherit; text-decoration: none;">
+					<h4>Example</h4>
+				</a>
+				<pre><code class="language-ts"><span style="color: #008000">// forRootAsync should be used when loading configuration asynchronously</span>
+<span style="color: #001080">TypedConfigModule</span><span style="color: #000000">.</span><span style="color: #795E26">forRootAsync</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">schema:</span><span style="color: #000000"> </span><span style="color: #001080">RootConfig</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">load:</span><span style="color: #000000"> </span><span style="color: #795E26">remoteLoader</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;http://localhost:8080&#039;</span><span style="color: #000000">, { </span><span style="color: #008000">/* options */</span><span style="color: #000000"> }),</span>
+<span style="color: #000000">})</span>
+</code></pre>
+				<a href="#passing-options-2" id="passing-options-2" style="color: inherit; text-decoration: none;">
+					<h4>Passing options</h4>
+				</a>
+				<p>The <code>remoteLoader</code> function optionally expects a <code>RemoteLoaderOptions</code> object as a second parameter, which accepts all <code>axios</code> request configuration except <code>url</code>.</p>
+				<pre><code class="language-ts"><span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">RemoteLoaderOptions</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">AxiosRequestConfigWithoutUrl</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #008000">/**</span>
+<span style="color: #008000">   * Config file type</span>
+<span style="color: #008000">   */</span>
+<span style="color: #000000">  </span><span style="color: #001080">type</span><span style="color: #000000">?: ((</span><span style="color: #001080">response</span><span style="color: #000000">: </span><span style="color: #267F99">any</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">RemoteLoaderConfigType</span><span style="color: #000000">) | </span><span style="color: #267F99">RemoteLoaderConfigType</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">  </span><span style="color: #008000">/**</span>
+<span style="color: #008000">   * A function that maps http response body to corresponding config object</span>
+<span style="color: #008000">   */</span>
+<span style="color: #000000">  </span><span style="color: #795E26">mapResponse</span><span style="color: #000000">?: (</span><span style="color: #001080">config</span><span style="color: #000000">: </span><span style="color: #267F99">any</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">Promise</span><span style="color: #000000">&lt;</span><span style="color: #267F99">any</span><span style="color: #000000">&gt; | </span><span style="color: #267F99">any</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">  </span><span style="color: #008000">/**</span>
+<span style="color: #008000">   * A function that determines if the request should be retried</span>
+<span style="color: #008000">   */</span>
+<span style="color: #000000">  </span><span style="color: #795E26">shouldRetry</span><span style="color: #000000">?: (</span><span style="color: #001080">response</span><span style="color: #000000">: </span><span style="color: #267F99">AxiosResponse</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #267F99">boolean</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">  </span><span style="color: #008000">/**</span>
+<span style="color: #008000">   * Number of retries to perform, defaults to 3</span>
+<span style="color: #008000">   */</span>
+<span style="color: #000000">  </span><span style="color: #001080">retries</span><span style="color: #000000">?: </span><span style="color: #267F99">number</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">  </span><span style="color: #008000">/**</span>
+<span style="color: #008000">   * Interval in milliseconds between each retry</span>
+<span style="color: #008000">   */</span>
+<span style="color: #000000">  </span><span style="color: #001080">retryInterval</span><span style="color: #000000">?: </span><span style="color: #267F99">number</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>You can use the <code>mapResponse</code> function to preprocess the server response before parsing with <code>type</code>, and use <code>shouldRetry</code> function to determine whether server response is valid or not. When server response is not valid, you can use <code>retries</code> and <code>retryInterval</code> to adjust retry strategies. For example:</p>
+				<pre><code class="language-ts"><span style="color: #008000">/*</span>
+<span style="color: #008000">  Example server response: </span>
+<span style="color: #008000">  {</span>
+<span style="color: #008000">    &quot;code&quot;: 0,</span>
+<span style="color: #008000">    &quot;fileName&quot;: &quot;.env.yaml&quot;,</span>
+<span style="color: #008000">    &quot;fileType&quot;: &quot;yaml&quot;,</span>
+<span style="color: #008000">    &quot;fileContent&quot;: &quot;database:\n    table:\n        name: example&quot;</span>
+<span style="color: #008000">  }</span>
+<span style="color: #008000">*/</span>
+
+<span style="color: #001080">TypedConfigModule</span><span style="color: #000000">.</span><span style="color: #795E26">forRootAsync</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">schema:</span><span style="color: #000000"> </span><span style="color: #001080">RootConfig</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">load:</span><span style="color: #000000"> </span><span style="color: #795E26">remoteLoader</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;http://localhost:8080&#039;</span><span style="color: #000000">, {</span>
+<span style="color: #000000">        </span><span style="color: #795E26">type</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #001080">response</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">response</span><span style="color: #000000">.</span><span style="color: #001080">fileType</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #795E26">mapResponse</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #001080">response</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">response</span><span style="color: #000000">.</span><span style="color: #001080">fileContent</span>
+<span style="color: #000000">        </span><span style="color: #008000">// retry when http status is not 200, or response code is not zero</span>
+<span style="color: #000000">        </span><span style="color: #001080">shouldRetry</span><span style="color: #000000">: </span><span style="color: #001080">response</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">response</span><span style="color: #000000">.</span><span style="color: #001080">data</span><span style="color: #000000">.</span><span style="color: #001080">code</span><span style="color: #000000"> !== </span><span style="color: #098658">0</span>
+<span style="color: #000000">        </span><span style="color: #001080">retries</span><span style="color: #000000">: </span><span style="color: #098658">3</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">retryInterval:</span><span style="color: #000000"> </span><span style="color: #098658">3000</span>
+<span style="color: #000000">    }),</span>
+<span style="color: #000000">})</span>
+</code></pre>
+				<a href="#using-multiple-loaders" id="using-multiple-loaders" style="color: inherit; text-decoration: none;">
+					<h3>Using multiple loaders</h3>
+				</a>
+				<p>Loading configuration from file system is convenient for development, but when it comes to deployment, you may need to load configuration from environment variables, especially in a dockerized environment. This can be easily achieved by providing multiple loaders. For example:</p>
+				<pre><code class="language-ts"><span style="color: #001080">TypedConfigModule</span><span style="color: #000000">.</span><span style="color: #795E26">forRoot</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">schema:</span><span style="color: #000000"> </span><span style="color: #001080">RootConfig</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #008000">// Loaders having larger index take precedence over smaller ones,</span>
+<span style="color: #000000">    </span><span style="color: #008000">// make sure dotenvLoader comes after fileLoader ensures that</span>
+<span style="color: #000000">    </span><span style="color: #008000">// environment variables always have the highest priority</span>
+<span style="color: #000000">    </span><span style="color: #001080">load:</span><span style="color: #000000"> [</span>
+<span style="color: #000000">        </span><span style="color: #795E26">fileLoader</span><span style="color: #000000">({ </span><span style="color: #008000">/* options */</span><span style="color: #000000"> }),</span>
+<span style="color: #000000">        </span><span style="color: #795E26">dotenvLoader</span><span style="color: #000000">({ </span><span style="color: #008000">/* options */</span><span style="color: #000000"> }),</span>
+<span style="color: #000000">    ]</span>
+<span style="color: #000000">})</span>
+</code></pre>
+				<a href="#using-custom-loader" id="using-custom-loader" style="color: inherit; text-decoration: none;">
+					<h3>Using custom loader</h3>
+				</a>
+				<p>If native loaders provided by <code>nest-typed-config</code> can&#39;t meet your needs, you can implement a custom loader. This can be achieved by providing a function which returns the configuration object synchronously or asynchronously through the <code>load</code> option. For example:</p>
+				<pre><code class="language-ts"><span style="color: #001080">TypedConfigModule</span><span style="color: #000000">.</span><span style="color: #795E26">forRoot</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">schema:</span><span style="color: #000000"> </span><span style="color: #001080">RootConfig</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">load</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> {</span>
+<span style="color: #000000">            </span><span style="color: #001080">host:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;127.0.0.1&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">            </span><span style="color: #001080">port:</span><span style="color: #000000"> </span><span style="color: #098658">3000</span>
+<span style="color: #000000">        }</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">})</span>
+</code></pre>
+				<a href="#default-values" id="default-values" style="color: inherit; text-decoration: none;">
+					<h2>Default values</h2>
+				</a>
+				<p>Just define your default values in config schema, and you are ready to go:</p>
+				<pre><code class="language-ts"><span style="color: #008000">// config.ts</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">Config</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    @</span><span style="color: #795E26">IsString</span><span style="color: #000000">()</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">host</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;127.0.0.1&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">    @</span><span style="color: #795E26">IsNumber</span><span style="color: #000000">()</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">port</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000"> = </span><span style="color: #098658">3000</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#using-config-outside-nest39s-ioc-container-usage-in-decorators" id="using-config-outside-nest39s-ioc-container-usage-in-decorators" style="color: inherit; text-decoration: none;">
+					<h2>Using config outside Nest&#39;s IoC container (Usage in decorators)</h2>
+				</a>
+				<a href="#caution" id="caution" style="color: inherit; text-decoration: none;">
+					<h3>Caution!</h3>
+				</a>
+				<p>Using config outside Nest&#39;s IoC container will:</p>
+				<ol>
+					<li>make you struggle harder writing unit tests.</li>
+					<li>force you to register <code>TypedConfigModule</code> synchronously using <code>forRoot</code>, since asynchronous configuration loading doesn&#39;t make sense under this situation.</li>
+				</ol>
+				<a href="#how-to" id="how-to" style="color: inherit; text-decoration: none;">
+					<h3>How to</h3>
+				</a>
+				<p>Due to the nature of JavaScript loading modules, decorators are executed before Nest&#39;s module initialization. If you want to get config value in decorators like <code>@Controller()</code> or <code>@WebSocketGateway()</code>, config module should be initialized before application bootstrap.</p>
+				<p>Suppose we need to inject routing information from the configuration, then we can define the configuration like this:</p>
+				<pre><code class="language-ts"><span style="color: #008000">// config.ts</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Type</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;class-transformer&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">IsDefined</span><span style="color: #000000">, </span><span style="color: #001080">IsNumber</span><span style="color: #000000">, </span><span style="color: #001080">IsString</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;class-validator&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">RouteConfig</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  @</span><span style="color: #795E26">IsString</span><span style="color: #000000">()</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">app</span><span style="color: #000000">!: </span><span style="color: #267F99">string</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">RootConfig</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  @</span><span style="color: #795E26">IsDefined</span><span style="color: #000000">()</span>
+<span style="color: #000000">  @</span><span style="color: #795E26">Type</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">RouteConfig</span><span style="color: #000000">)</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">route</span><span style="color: #000000">!: </span><span style="color: #267F99">RouteConfig</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>Then create a configuration file:</p>
+				<pre><code class="language-yaml"><span style="color: #800000">route</span><span style="color: #000000">:</span>
+<span style="color: #000000">    </span><span style="color: #800000">app</span><span style="color: #000000">: </span><span style="color: #0000FF">/app</span>
+</code></pre>
+				<p>After creating the configuration file, we can initialize our <code>ConfigModule</code> with <code>TypedConfigModule</code>, and select <code>RootConfig</code> from <code>ConfigModule</code> using <code>selectConfig</code> method.</p>
+				<pre><code class="language-ts"><span style="color: #008000">// config.module.ts</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">TypedConfigModule</span><span style="color: #000000">, </span><span style="color: #001080">fileLoader</span><span style="color: #000000">, </span><span style="color: #001080">selectConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;nest-typed-config&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">RouteConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./config&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">ConfigModule</span><span style="color: #000000"> = </span><span style="color: #001080">TypedConfigModule</span><span style="color: #000000">.</span><span style="color: #795E26">forRoot</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">schema:</span><span style="color: #000000"> </span><span style="color: #001080">RootConfig</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">load:</span><span style="color: #000000"> </span><span style="color: #795E26">fileLoader</span><span style="color: #000000">(),</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">rootConfig</span><span style="color: #000000"> = </span><span style="color: #795E26">selectConfig</span><span style="color: #000000">(</span><span style="color: #001080">ConfigModule</span><span style="color: #000000">, </span><span style="color: #001080">RootConfig</span><span style="color: #000000">);</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">routeConfig</span><span style="color: #000000"> = </span><span style="color: #795E26">selectConfig</span><span style="color: #000000">(</span><span style="color: #001080">ConfigModule</span><span style="color: #000000">, </span><span style="color: #001080">RouteConfig</span><span style="color: #000000">);</span>
+</code></pre>
+				<p>That&#39;s it! You can use <code>rootConfig</code> and <code>routeConfig</code> anywhere in your app now!</p>
+				<pre><code class="language-ts"><span style="color: #008000">// app.controller.ts</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Controller</span><span style="color: #000000">, </span><span style="color: #001080">Get</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@nestjs/common&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">AppService</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./app.service&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">rootConfig</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./config.module&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">@</span><span style="color: #795E26">Controller</span><span style="color: #000000">(</span><span style="color: #001080">routeConfig</span><span style="color: #000000">.</span><span style="color: #001080">app</span><span style="color: #000000">)</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">AppController</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">constructor</span><span style="color: #000000">(</span><span style="color: #0000FF">private</span><span style="color: #000000"> </span><span style="color: #0000FF">readonly</span><span style="color: #000000"> </span><span style="color: #001080">appService</span><span style="color: #000000">: </span><span style="color: #267F99">AppService</span><span style="color: #000000">) {}</span>
+
+<span style="color: #000000">  @</span><span style="color: #795E26">Get</span><span style="color: #000000">()</span>
+<span style="color: #000000">  </span><span style="color: #795E26">show</span><span style="color: #000000">(): </span><span style="color: #267F99">void</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">appService</span><span style="color: #000000">.</span><span style="color: #795E26">show</span><span style="color: #000000">();</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>For a full example, please visit <a href="https://codesandbox.io/s/restless-snowflake-l2eyx?file=/src/config.module.ts">CodeSandbox</a>, or our <a href="https://github1s.com/Nikaple/nest-typed-config/blob/main/examples/preload/src/app.module.ts">examples</a> folder.</p>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
+				<p>Please refer to our <a href="https://nikaple.github.io/nest-typed-config">API website</a> for full documentation.</p>
+				<a href="#changelog" id="changelog" style="color: inherit; text-decoration: none;">
+					<h2>Changelog</h2>
+				</a>
+				<p>Please refer to <a href="https://github.com/Nikaple/nest-typed-config/blob/main/CHANGELOG.md">CHANGELOG.md</a></p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p><a href="LICENSE">MIT</a>.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="classes/typedconfigmodule.html" class="tsd-kind-icon">Typed<wbr>Config<wbr>Module</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/dotenvloaderoptions.html" class="tsd-kind-icon">Dotenv<wbr>Loader<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/fileloaderoptions.html" class="tsd-kind-icon">File<wbr>Loader<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/remoteloaderoptions.html" class="tsd-kind-icon">Remote<wbr>Loader<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/typedconfigmoduleasyncoptions.html" class="tsd-kind-icon">Typed<wbr>Config<wbr>Module<wbr>Async<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/typedconfigmoduleoptions.html" class="tsd-kind-icon">Typed<wbr>Config<wbr>Module<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#asyncconfigloader" class="tsd-kind-icon">Async<wbr>Config<wbr>Loader</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#configloader" class="tsd-kind-icon">Config<wbr>Loader</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#remoteloaderconfigtype" class="tsd-kind-icon">Remote<wbr>Loader<wbr>Config<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#dotenvloader" class="tsd-kind-icon">dotenv<wbr>Loader</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#fileloader" class="tsd-kind-icon">file<wbr>Loader</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#remoteloader" class="tsd-kind-icon">remote<wbr>Loader</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#selectconfig" class="tsd-kind-icon">select<wbr>Config</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
