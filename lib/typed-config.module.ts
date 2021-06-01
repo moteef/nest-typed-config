@@ -14,6 +14,7 @@ import {
 import { forEachDeep } from './utils/for-each-deep.util';
 import { identity } from './utils/identity.util';
 import { debug } from './utils/debug.util';
+import configurationHolder from './configuration-holder';
 
 @Module({})
 export class TypedConfigModule {
@@ -123,6 +124,7 @@ export class TypedConfigModule {
     Config: ClassConstructor<any>,
     options?: Partial<ValidatorOptions>,
   ) {
+    configurationHolder.setConfig(rawConfig);
     const config = plainToClass(Config, rawConfig);
     // defaults to strictest validation rules
     const schemaErrors = validateSync(config, {
